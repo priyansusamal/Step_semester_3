@@ -1,4 +1,4 @@
-package main.java.string_operations_performance.class_problems;
+package string_operations_performance.class_problems;
 import java.util.Scanner;
 
 public class FileExtensionValidator {
