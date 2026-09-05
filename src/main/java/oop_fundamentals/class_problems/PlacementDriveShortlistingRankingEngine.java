@@ -22,21 +22,32 @@ class Candidate implements Comparable<Candidate> {
         return cgpa >= 6.5 && codingScore >= 60;
     }
 
-    private double getCompositeScore() {
+    private double calculateCompositeScore() {
         return (cgpa * 10) + (codingScore * 0.5);
     }
 
     @Override
     public int compareTo(Candidate other) {
-        return Double.compare(other.getCompositeScore(), this.getCompositeScore());
+        return Double.compare(
+            other.calculateCompositeScore(),
+            this.calculateCompositeScore()
+        );
     }
 
     public String getName() {
         return name;
     }
 
+    public double getCgpa() {
+        return cgpa;
+    }
+
+    public int getCodingScore() {
+        return codingScore;
+    }
+
     public double getCompositeScore() {
-        return getCompositeScore();
+        return calculateCompositeScore();
     }
 }
 
@@ -48,9 +59,14 @@ public class PlacementDriveShortlistingRankingEngine {
         int count = 0;
 
         for (Candidate candidate : candidates) {
-            if (Candidate.isEligible(candidate.cgpa)) {
+
+            if (Candidate.isEligible(candidate.getCgpa())) {
                 shortlisted[count++] = candidate;
-            } else if (Candidate.isEligible(candidate.cgpa, candidate.codingScore)) {
+
+            } else if (Candidate.isEligible(
+                    candidate.getCgpa(),
+                    candidate.getCodingScore())) {
+
                 shortlisted[count++] = candidate;
             }
         }
@@ -62,6 +78,7 @@ public class PlacementDriveShortlistingRankingEngine {
         String result = "";
 
         for (int i = 0; i < shortlisted.length; i++) {
+
             result += (i + 1) + ". "
                     + shortlisted[i].getName()
                     + " (" + shortlisted[i].getCompositeScore() + ")";
